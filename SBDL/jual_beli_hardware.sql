@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 21 Mar 2020 pada 15.03
--- Versi server: 10.4.11-MariaDB
--- Versi PHP: 7.4.3
+-- Generation Time: Jun 08, 2020 at 06:18 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `member`
+-- Table structure for table `member`
 --
 
 CREATE TABLE `member` (
@@ -37,43 +37,40 @@ CREATE TABLE `member` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `member`
+-- Dumping data for table `member`
 --
 
 INSERT INTO `member` (`UserID`, `Nama`, `No_Telpon`, `Alamat`, `JK`) VALUES
-('MJK01', 'Nur Rahma', '0881798665', 'Majalengka', 'P'),
-('MJK02', 'Udin', '0888635341', 'Rajagaluh', 'L'),
-('MJK03', 'Uman', '0877566465', 'Cikijing', 'L'),
-('MJK04', 'Asep', '0865254264', 'Majalengka', 'L');
+('1', 'udin', '088', 'majalengka', 'L'),
+('2', 'neng', 'ooo', 'majalengka', 'P'),
+('3', 'omar', '001', 'cigasong', 'L');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pemasok`
+-- Table structure for table `pemasok`
 --
 
 CREATE TABLE `pemasok` (
   `Kode_Pemasok` varchar(50) NOT NULL,
   `Nama` varchar(50) NOT NULL,
   `No_Telpon` varchar(50) NOT NULL,
-  `Kode_Barang` varchar(50) NOT NULL,
-  `Nama_Barang` varchar(50) NOT NULL
+  `Nama_Barang` varchar(50) NOT NULL,
+  `Kode_Barang` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `pemasok`
+-- Dumping data for table `pemasok`
 --
 
-INSERT INTO `pemasok` (`Kode_Pemasok`, `Nama`, `No_Telpon`, `Kode_Barang`, `Nama_Barang`) VALUES
-('PSK01', 'Firman', '0888565412', 'BR0011', 'Keybord type1'),
-('PSK02', 'Abdul', '0883674476', 'BR0021', 'Hard disk 500GB'),
-('PSK03', 'Iman', '0886776453', 'BR0031', 'Monitor'),
-('PSK04', 'Rizal', '0899975233', 'BR0041', 'Mouse');
+INSERT INTO `pemasok` (`Kode_Pemasok`, `Nama`, `No_Telpon`, `Nama_Barang`, `Kode_Barang`) VALUES
+('1', 'maman', '018', 'monitor 20inc', '2'),
+('2', 'uman', '002', 'ram 4gb', '3');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pembelian`
+-- Table structure for table `pembelian`
 --
 
 CREATE TABLE `pembelian` (
@@ -89,22 +86,21 @@ CREATE TABLE `pembelian` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `pembelian`
+-- Dumping data for table `pembelian`
 --
 
 INSERT INTO `pembelian` (`No_Nota`, `Kode_Barang`, `Nama_Barang`, `Kode_Pemasok`, `Harga_Beli`, `Jumlah`, `Tanggal`, `Nama_Pemasok`, `Jumlah_Harga`) VALUES
-('001', 'BR0011', 'Keybord type1', 'PSK01', 180000, '10', '2020-02-11', 'Firman', 18000000),
-('002', 'BR0021', 'Hard disk 500GB', 'PSK02', 250000, '5', '2020-02-12', 'Abdul', 1250000),
-('003', 'BR0031', 'Monitor', 'PSK03', 150000, '5', '2020-02-14', 'Iman', 750000);
+('1', '2', 'monitor 20inc', '1', 20000, '10', '2020-05-04', 'maman', 200000),
+('2', '3', 'ram 4gb', '2', 10000, '10', '2020-05-02', 'uman', 100000);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `penjualan`
+-- Table structure for table `penjualan`
 --
 
 CREATE TABLE `penjualan` (
-  `No_Nota` varchar(50) NOT NULL,
+  `No_Nota_Pembelian` varchar(50) NOT NULL,
   `UserID` varchar(50) NOT NULL,
   `Nama_pembeli` varchar(50) NOT NULL,
   `Nama_Barang` varchar(50) NOT NULL,
@@ -115,10 +111,18 @@ CREATE TABLE `penjualan` (
   `Kode_Barang` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `penjualan`
+--
+
+INSERT INTO `penjualan` (`No_Nota_Pembelian`, `UserID`, `Nama_pembeli`, `Nama_Barang`, `Jumlah_beli`, `Tanggal`, `Harga`, `Harga_Total`, `Kode_Barang`) VALUES
+('1', '1', 'udin', 'monitor 20inc', '1', '2020-05-01', 200000, 200000, '2'),
+('2', '3', 'omar', 'ram 4gb', '1', '2020-04-30', 100000, 100000, '3');
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tabel_barang`
+-- Table structure for table `tabel_barang`
 --
 
 CREATE TABLE `tabel_barang` (
@@ -131,19 +135,18 @@ CREATE TABLE `tabel_barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tabel_barang`
+-- Dumping data for table `tabel_barang`
 --
 
 INSERT INTO `tabel_barang` (`Kode_Barang`, `Kode_Jenis_Barang`, `Nama_Barang`, `Harga_Jual`, `Harga_Beli`, `Stok`) VALUES
-('BR0011', 'KJB1', 'Keybord type 1', 200000, 180000, '20'),
-('BR0012', 'KJB1', 'Keybord type2', 220000, 190000, '20'),
-('BR0021', 'KJB2', 'Hard disk 500GB', 300000, 250000, '10'),
-('BR0022', 'KJB2', 'Hard disk 1024GB', 550000, 500000, '5');
+('1', '1', 'monitor lcd', 100000, 10000, '50'),
+('2', '1', 'monitor 20inc', 200000, 20000, '4'),
+('3', '2', 'ram 4gb', 100000, 10000, '40');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tabel_jenis_barang`
+-- Table structure for table `tabel_jenis_barang`
 --
 
 CREATE TABLE `tabel_jenis_barang` (
@@ -152,34 +155,32 @@ CREATE TABLE `tabel_jenis_barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tabel_jenis_barang`
+-- Dumping data for table `tabel_jenis_barang`
 --
 
 INSERT INTO `tabel_jenis_barang` (`Kode_Jenis_Barang`, `Nama_Jenis_Barang`) VALUES
-('KJB1', 'Keybord'),
-('KJB2', 'Hard Disk'),
-('KJB3', 'Monitor'),
-('KJB4', 'Mouse');
+('1', 'monitor'),
+('2', 'memori');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `member`
+-- Indexes for table `member`
 --
 ALTER TABLE `member`
   ADD PRIMARY KEY (`UserID`);
 
 --
--- Indeks untuk tabel `pemasok`
+-- Indexes for table `pemasok`
 --
 ALTER TABLE `pemasok`
   ADD PRIMARY KEY (`Kode_Pemasok`),
   ADD KEY `Kode_Barang` (`Kode_Barang`);
 
 --
--- Indeks untuk tabel `pembelian`
+-- Indexes for table `pembelian`
 --
 ALTER TABLE `pembelian`
   ADD PRIMARY KEY (`No_Nota`),
@@ -187,49 +188,55 @@ ALTER TABLE `pembelian`
   ADD KEY `Kode_Pemasok` (`Kode_Pemasok`);
 
 --
--- Indeks untuk tabel `penjualan`
+-- Indexes for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  ADD PRIMARY KEY (`No_Nota`),
+  ADD PRIMARY KEY (`No_Nota_Pembelian`),
   ADD KEY `UserID` (`UserID`),
   ADD KEY `Kode_Barang` (`Kode_Barang`);
 
 --
--- Indeks untuk tabel `tabel_barang`
+-- Indexes for table `tabel_barang`
 --
 ALTER TABLE `tabel_barang`
   ADD PRIMARY KEY (`Kode_Barang`),
-  ADD KEY `Nama_Jenis_Barang` (`Kode_Jenis_Barang`);
+  ADD KEY `Kode_Jenis_Barang` (`Kode_Jenis_Barang`);
 
 --
--- Indeks untuk tabel `tabel_jenis_barang`
+-- Indexes for table `tabel_jenis_barang`
 --
 ALTER TABLE `tabel_jenis_barang`
   ADD PRIMARY KEY (`Kode_Jenis_Barang`);
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `pembelian`
+-- Constraints for table `pemasok`
+--
+ALTER TABLE `pemasok`
+  ADD CONSTRAINT `pemasok_ibfk_1` FOREIGN KEY (`Kode_Barang`) REFERENCES `tabel_barang` (`Kode_Barang`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pembelian`
 --
 ALTER TABLE `pembelian`
-  ADD CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`Kode_Pemasok`) REFERENCES `pemasok` (`Kode_Pemasok`),
-  ADD CONSTRAINT `pembelian_ibfk_2` FOREIGN KEY (`Kode_Barang`) REFERENCES `pemasok` (`Kode_Barang`);
+  ADD CONSTRAINT `pembelian_ibfk_1` FOREIGN KEY (`Kode_Barang`) REFERENCES `tabel_barang` (`Kode_Barang`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pembelian_ibfk_2` FOREIGN KEY (`Kode_Pemasok`) REFERENCES `pemasok` (`Kode_Pemasok`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `penjualan`
+-- Constraints for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  ADD CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `member` (`UserID`),
-  ADD CONSTRAINT `penjualan_ibfk_2` FOREIGN KEY (`Kode_Barang`) REFERENCES `tabel_barang` (`Kode_Barang`);
+  ADD CONSTRAINT `penjualan_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `member` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `penjualan_ibfk_2` FOREIGN KEY (`Kode_Barang`) REFERENCES `tabel_barang` (`Kode_Barang`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `tabel_barang`
+-- Constraints for table `tabel_barang`
 --
 ALTER TABLE `tabel_barang`
-  ADD CONSTRAINT `tabel_barang_ibfk_1` FOREIGN KEY (`Kode_Jenis_Barang`) REFERENCES `tabel_jenis_barang` (`Kode_Jenis_Barang`);
+  ADD CONSTRAINT `tabel_barang_ibfk_1` FOREIGN KEY (`Kode_Jenis_Barang`) REFERENCES `tabel_jenis_barang` (`Kode_Jenis_Barang`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
